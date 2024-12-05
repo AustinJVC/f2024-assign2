@@ -39,7 +39,7 @@ function createQualifyingTable(qualifying, qualifyingData){
     th1.textContent = "Pos";
     tr.appendChild(th1);
 
-    const th2 = document.createElement('th'); 
+    const th2 = document.createElement('th');   
     th2.textContent = "Name";
     tr.appendChild(th2);
 
@@ -67,11 +67,19 @@ function createQualifyingTable(qualifying, qualifyingData){
         tr2.appendChild(td);
 
         const td2 = document.createElement('td');
-        td2.textContent = result.driver.forename + " " + result.driver.surname;
+        td2.classList.add('driver')
+        a = document.createElement('a')
+        a.dataset.driverRef = result.driver.driverRef
+        a.textContent = result.driver.forename + " " + result.driver.surname;
+        td2.appendChild(a);
         tr2.appendChild(td2);
         
         const td3 = document.createElement('td');
-        td3.textContent = result.constructor.name;
+        td3.classList.add('constructor')
+        a = document.createElement('a')
+        a.dataset.ref = result.constructor.ref
+        a.textContent = result.constructor.name;;
+        td3.appendChild(a);
         tr2.appendChild(td3);
         
         const td4 = document.createElement('td');
@@ -129,12 +137,20 @@ function createResultsTable(results, resultsData){
         td.textContent = result.position;
         tr2.appendChild(td);
 
-        const td2 = document.createElement('td');
-        td2.textContent = result.driver.forename + " " + result.driver.surname;
+        td2 = document.createElement('td');
+        td2.classList.add('driver')
+        a = document.createElement('a')
+        a.dataset.driverRef = result.driver.driverRef
+        a.textContent = result.driver.forename + " " + result.driver.surname;
+        td2.appendChild(a);
         tr2.appendChild(td2);
         
         const td3 = document.createElement('td');
-        td3.textContent = result.constructor.name;
+        td3.classList.add('constructor')
+        a = document.createElement('a')
+        a.dataset.ref = result.constructor.ref
+        a.textContent = result.constructor.name;;
+        td3.appendChild(a);
         tr2.appendChild(td3);
         
         const td4 = document.createElement('td');

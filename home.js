@@ -94,5 +94,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
             generateRaceView(e.target.dataset.raceId);
         }
     });
+    
+    div2.addEventListener('click', (e) => {
+        if (e.target.nodeName == 'A') {
+            generateDriverView(e.target.dataset.raceId);
+        }
+    });
 
 });
