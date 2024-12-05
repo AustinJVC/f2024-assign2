@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     function updateRaces(season) {
 
-        // Clear previous table and heading from div1
+        // Clear previous selected season.
         div1.querySelectorAll('h2, table').forEach( (tableRow) => {
             tableRow.remove();
         })
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         tr.appendChild(th2);
     
         const th3 = document.createElement('th');
-        th3.textContent = "Action";
+        th3.textContent = "";
         tr.appendChild(th3);
 
         for (let race of racesData) {
@@ -72,17 +72,27 @@ document.addEventListener('DOMContentLoaded', ()=>{
             tr2.appendChild(td2);
         
             const td3 = document.createElement('td');
+            a = document.createElement('a')
+            a.classList.add('resultsButton');
+            a.textContent = 'Results';
+            a.dataset.raceId = race.id;
+            td3.appendChild(a)
+
             tr2.appendChild(td3);
-        
             table.appendChild(tr2);
         }
     }
+
     select = div1.querySelector('select');
     select.addEventListener('change', () => {
-        let season = select.value;
-        
-        getData("https://www.randyconnolly.com/funwebdev/3rd/api/f1/races.php?season=" + season);
-        updateRaces(season);
+        getData("https://www.randyconnolly.com/funwebdev/3rd/api/f1/races.php?season=" + select.value).then(() => updateRaces(select.value))
+    });
+
+
+    div1.addEventListener('click', (e) => {
+        if (e.target.nodeName == 'A') {
+            generateRaceView(e.target.dataset.raceId);
+        }
     });
 
 });

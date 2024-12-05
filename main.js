@@ -1,5 +1,5 @@
 function getData(url){
-    fetch(url)
+    return fetch(url)
     .then(response => {
         if (!response.ok) {
         throw new Error('not gud');
@@ -9,7 +9,7 @@ function getData(url){
     .then(data => {
         const apiData = JSON.stringify(data); 
         localStorage.setItem('seasonData', apiData);
-        //console.log(localStorage.getItem("seasonData"))
+        return apiData;
     })
     .catch(error => {
         console.error('Error:', error);
