@@ -17,11 +17,12 @@ function generateRaceView(raceId){
     results.classList.add = 'results';
     div2.appendChild(results);
 
-    getData("https://www.randyconnolly.com/funwebdev/3rd/api/f1/qualifying.php?race=" + raceId)
-        .then((data) => createQualifyingTable(qualifying, data))
-    getData("https://www.randyconnolly.com/funwebdev/3rd/api/f1/results.php?race=" + raceId)
-        .then((data) => createResultsTable(results, data));
+    /*qualifyingData = JSON.parse(localStorage.getItem("qualifyingData")).filter((param) => {
+        return race.id == param
+    })
     
+    createQualifyingTable(qualifying, qualifyingData)
+    */
 }
 function createQualifyingTable(qualifying, qualifyingData){
 
@@ -67,16 +68,17 @@ function createQualifyingTable(qualifying, qualifyingData){
         tr2.appendChild(td);
 
         const td2 = document.createElement('td');
-        td2.classList.add('driver')
+        
         a = document.createElement('a')
-        a.dataset.driverRef = result.driver.driverRef
+        a.classList.add('driver')
+        a.dataset.ref = result.driver.ref
         a.textContent = result.driver.forename + " " + result.driver.surname;
         td2.appendChild(a);
         tr2.appendChild(td2);
         
         const td3 = document.createElement('td');
-        td3.classList.add('constructor')
         a = document.createElement('a')
+        a.classList.add('constructor')
         a.dataset.ref = result.constructor.ref
         a.textContent = result.constructor.name;;
         td3.appendChild(a);
@@ -138,16 +140,18 @@ function createResultsTable(results, resultsData){
         tr2.appendChild(td);
 
         td2 = document.createElement('td');
-        td2.classList.add('driver')
+        
         a = document.createElement('a')
-        a.dataset.driverRef = result.driver.driverRef
+        a.classList.add('driver')
+        a.dataset.ref = result.driver.ref
         a.textContent = result.driver.forename + " " + result.driver.surname;
         td2.appendChild(a);
         tr2.appendChild(td2);
         
         const td3 = document.createElement('td');
-        td3.classList.add('constructor')
+       
         a = document.createElement('a')
+        a.classList.add('constructor')
         a.dataset.ref = result.constructor.ref
         a.textContent = result.constructor.name;;
         td3.appendChild(a);

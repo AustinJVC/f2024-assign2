@@ -8,7 +8,6 @@ function getData(url){
     })
     .then(data => {
         const apiData = JSON.stringify(data); 
-        localStorage.setItem('seasonData', apiData);
         return apiData;
     })
     .catch(error => {

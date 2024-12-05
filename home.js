@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     generateHomeView(div1, div2);
 
-    function updateRaces(season) {
+    function updateRaces() {
 
         // Clear previous selected season.
         div1.querySelectorAll('h2, table').forEach( (tableRow) => {
@@ -34,12 +34,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
         })
         
         div2.classList.remove('no-race-selected');
-         
-        racesData = localStorage.getItem("seasonData")
-        racesData = JSON.parse(racesData);
+        
+        racesData = JSON.parse(localStorage.getItem("seasonData"));
+
+        console.log(racesData)
 
         const h2 = document.createElement('h2'); 
-        h2.textContent = season + " Races";
+        h2.textContent = racesData[0].year + " Races";
         div1.appendChild(h2);
     
         const table = document.createElement('table'); 
@@ -85,7 +86,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     select = div1.querySelector('select');
     select.addEventListener('change', () => {
-        getData("https://www.randyconnolly.com/funwebdev/3rd/api/f1/races.php?season=" + select.value).then(() => updateRaces(select.value))
+
+        seasonData = getData("https://www.randyconnolly.com/funwebdev/3rd/api/f1/races.php?season=" + select.value).then((data) => localStorage.setItem("seasonData", data)).then(updateRaces());
+        qualifyingData = getData("https://www.randyconnolly.com/funwebdev/3rd/api/f1/qualifying.php?season=" + select.value).then((data) => localStorage.setItem("qualifyingData", data));
+        resultsData = getData("https://www.randyconnolly.com/funwebdev/3rd/api/f1/results.php?season=" + select.value).then((data) => localStorage.setItem("resultsData", data));        
     });
 
 
@@ -97,7 +101,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     
     div2.addEventListener('click', (e) => {
         if (e.target.nodeName == 'A') {
-            generateDriverView(e.target.dataset.raceId);
+            generatePopup(e.target.className, e.target.dataset.ref);
         }
     });
 
