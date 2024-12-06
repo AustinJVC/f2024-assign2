@@ -91,7 +91,7 @@ function driverPopup(ref, season){
         const positionCell = document.createElement('td');
         positionCell.textContent = result.positionOrder;
         row.appendChild(positionCell);
-        
+        //No raxce ID FIx
         getData('https://www.randyconnolly.com/funwebdev/3rd/api/f1/Results.php?race='+ result.race.id)
         .then((pointsData) => {
         const point = JSON.parse(pointsData);
