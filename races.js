@@ -1,4 +1,4 @@
-function generateRaceView(raceId){
+function generateRaceView(raceId, season){
     
 
     div2 = document.querySelector('#content')
@@ -17,17 +17,28 @@ function generateRaceView(raceId){
     results.classList.add = 'results';
     div2.appendChild(results);
 
-    /*qualifyingData = JSON.parse(localStorage.getItem("qualifyingData")).filter((param) => {
+    qualifyingData = JSON.parse(localStorage.getItem("qualifyingData" + season));
+    /*qualifyingData = JSON.parse(localStorage.getItem("qualifyingData" + season)).filter((param) => {
         return race.id == param
-    })
-    
+    })*/
+
+    console.log(raceId);
+
+    tempArray = [];
+    for(result of qualifyingData){
+        if(result.race.id == raceId){
+            tempArray.push(result)
+        }
+    }
+    qualifyingData = tempArray;
+    console.log(qualifyingData)
     createQualifyingTable(qualifying, qualifyingData)
-    */
+    
 }
 function createQualifyingTable(qualifying, qualifyingData){
 
     const h2 = document.createElement('h2'); 
-    h2.textContent = 'Qualifying';
+    h2.textContent = 'Qualifying Results for ' + qualifyingData[0].race.year + " " + qualifyingData[0].race.name;
     qualifying.appendChild(h2);
 
     const table = document.createElement('table'); 
@@ -60,7 +71,7 @@ function createQualifyingTable(qualifying, qualifyingData){
     th6.textContent = "Q3";
     tr.appendChild(th6);
 
-    for (let result of JSON.parse(qualifyingData)) {
+    for (let result of qualifyingData) {
         const tr2 = document.createElement('tr');
         
         const td = document.createElement('td');
@@ -132,7 +143,7 @@ function createResultsTable(results, resultsData){
     tr.appendChild(th5);
 
 
-    for (let result of JSON.parse(resultsData)) {
+    for (let result of resultsData) {
         const tr2 = document.createElement('tr');
         
         const td = document.createElement('td');

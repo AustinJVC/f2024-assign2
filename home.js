@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     generateHomeView(div1, div2);
 
-    function updateRaces() {
+    function updateRaces(season) {
 
         // Clear previous selected season.
         div1.querySelectorAll('h2, table').forEach( (tableRow) => {
@@ -35,9 +35,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
         
         div2.classList.remove('no-race-selected');
         
-        racesData = JSON.parse(localStorage.getItem("seasonData"));
+        racesData = JSON.parse(localStorage.getItem("seasonData" + season));
 
-        console.log(racesData)
+        //console.log(racesData)
 
         const h2 = document.createElement('h2'); 
         h2.textContent = racesData[0].year + " Races";
@@ -77,6 +77,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
             a.classList.add('resultsButton');
             a.textContent = 'Results';
             a.dataset.raceId = race.id;
+            a.dataset.year = race.year;
             td3.appendChild(a)
 
             tr2.appendChild(td3);
@@ -86,16 +87,21 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     select = div1.querySelector('select');
     select.addEventListener('change', () => {
-
-        seasonData = getData("https://www.randyconnolly.com/funwebdev/3rd/api/f1/races.php?season=" + select.value).then((data) => localStorage.setItem("seasonData", data)).then(updateRaces());
-        qualifyingData = getData("https://www.randyconnolly.com/funwebdev/3rd/api/f1/qualifying.php?season=" + select.value).then((data) => localStorage.setItem("qualifyingData", data));
-        resultsData = getData("https://www.randyconnolly.com/funwebdev/3rd/api/f1/results.php?season=" + select.value).then((data) => localStorage.setItem("resultsData", data));        
+        if(localStorage.getItem('seasonData' + select.value) == null || JSON.parse(localStorage.getItem('seasonData' + select.value))[0].year != select.value){
+            seasonData = getData("https://www.randyconnolly.com/funwebdev/3rd/api/f1/races.php?season=" + select.value).then((data) => localStorage.setItem("seasonData" + select.value, data)).then(() => updateRaces(select.value));
+            qualifyingData = getData("https://www.randyconnolly.com/funwebdev/3rd/api/f1/qualifying.php?season=" + select.value).then((data) => localStorage.setItem("qualifyingData" + select.value, data));
+            resultsData = getData("https://www.randyconnolly.com/funwebdev/3rd/api/f1/results.php?season=" + select.value).then((data) => localStorage.setItem("resultsData" + select.value, data));   
+        }
+        else{
+            updateRaces(select.value)
+        }
     });
 
 
     div1.addEventListener('click', (e) => {
         if (e.target.nodeName == 'A') {
-            generateRaceView(e.target.dataset.raceId);
+            console.log(e.target.dataset.raceId)
+            generateRaceView(e.target.dataset.raceId, e.target.dataset.year);
         }
     });
     
