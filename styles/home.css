@@ -1,6 +1,6 @@
 .no-race-selected {
     margin-top: -10px;
-    background-image: url("images/Home.jpg");
+    background-image: url("../images/Home.jpg");
     background-size: cover; 
     background-position: center;
     background-repeat: no-repeat;

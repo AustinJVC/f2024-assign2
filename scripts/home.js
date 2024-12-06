@@ -100,7 +100,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     div1.addEventListener('click', (e) => {
         if (e.target.nodeName == 'A') {
-            console.log(e.target.dataset.raceId)
             generateRaceView(e.target.dataset.raceId, e.target.dataset.year);
         }
     });

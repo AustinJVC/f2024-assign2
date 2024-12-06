@@ -3,8 +3,8 @@ function generateRaceView(raceId, season){
 
     div2 = document.querySelector('#content')
 
+    //remove the stuff
     children = Array.from(div2.children)
-
     for(child of children){
         child.remove();
     }
@@ -18,11 +18,7 @@ function generateRaceView(raceId, season){
     div2.appendChild(results);
 
     qualifyingData = JSON.parse(localStorage.getItem("qualifyingData" + season));
-    /*qualifyingData = JSON.parse(localStorage.getItem("qualifyingData" + season)).filter((param) => {
-        return race.id == param
-    })*/
-
-    console.log(raceId);
+    resultsData = JSON.parse(localStorage.getItem("resultsData" + season));
 
     tempArray = [];
     for(result of qualifyingData){
@@ -30,9 +26,19 @@ function generateRaceView(raceId, season){
             tempArray.push(result)
         }
     }
+    
     qualifyingData = tempArray;
+    
+    tempArray = [];
+    for(result of resultsData){
+        if(result.race.id == raceId){
+            tempArray.push(result)
+        }
+    }
+    
     console.log(qualifyingData)
-    createQualifyingTable(qualifying, qualifyingData)
+    createQualifyingTable(qualifying, qualifyingData);
+    createResultsTable(results, resultsData);
     
 }
 function createQualifyingTable(qualifying, qualifyingData){
@@ -113,7 +119,7 @@ function createQualifyingTable(qualifying, qualifyingData){
 function createResultsTable(results, resultsData){
 
     const h2 = document.createElement('h2'); 
-    h2.textContent = 'Results';
+    h2.textContent = 'Results for ' + resultsData[0].race.year + " " + resultsData[0].race.name;
     results.appendChild(h2);
 
     const table = document.createElement('table'); 
