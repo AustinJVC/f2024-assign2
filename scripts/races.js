@@ -9,14 +9,6 @@ function generateRaceView(raceId, season){
         child.remove();
     }
 
-    qualifying = document.createElement('div');
-    qualifying.classList.add = 'qualifying';
-    div2.appendChild(qualifying);
-
-    results = document.createElement('div');
-    results.classList.add = 'results';
-    div2.appendChild(results);
-
     qualifyingData = JSON.parse(localStorage.getItem("qualifyingData" + season));
     resultsData = JSON.parse(localStorage.getItem("resultsData" + season));
 
@@ -36,16 +28,25 @@ function generateRaceView(raceId, season){
         }
     }
     
-    console.log(qualifyingData)
+    resultsData = tempArray;
+
+    qualifying = document.createElement('div');
+    qualifying.classList.add = 'qualifying';
+    div2.appendChild(qualifying);
+
+    results = document.createElement('div');
+    results.classList.add = 'results';
+    div2.appendChild(results);
+    
     createQualifyingTable(qualifying, qualifyingData);
     createResultsTable(results, resultsData);
     
 }
 function createQualifyingTable(qualifying, qualifyingData){
 
-    const h2 = document.createElement('h2'); 
-    h2.textContent = 'Qualifying Results for ' + qualifyingData[0].race.year + " " + qualifyingData[0].race.name;
-    qualifying.appendChild(h2);
+    const h3 = document.createElement('h3'); 
+    h3.textContent = 'Qualifying ' + qualifyingData[0].race.year + " " + qualifyingData[0].race.name;
+    qualifying.appendChild(h3);
 
     const table = document.createElement('table'); 
     qualifying.appendChild(table);
@@ -89,6 +90,7 @@ function createQualifyingTable(qualifying, qualifyingData){
         a = document.createElement('a')
         a.classList.add('driver')
         a.dataset.ref = result.driver.ref
+        a.dataset.season = result.race.year
         a.textContent = result.driver.forename + " " + result.driver.surname;
         td2.appendChild(a);
         tr2.appendChild(td2);
@@ -97,6 +99,7 @@ function createQualifyingTable(qualifying, qualifyingData){
         a = document.createElement('a')
         a.classList.add('constructor')
         a.dataset.ref = result.constructor.ref
+        a.dataset.season = result.race.year
         a.textContent = result.constructor.name;;
         td3.appendChild(a);
         tr2.appendChild(td3);
@@ -118,9 +121,9 @@ function createQualifyingTable(qualifying, qualifyingData){
 }
 function createResultsTable(results, resultsData){
 
-    const h2 = document.createElement('h2'); 
-    h2.textContent = 'Results for ' + resultsData[0].race.year + " " + resultsData[0].race.name;
-    results.appendChild(h2);
+    const h3 = document.createElement('h3'); 
+    h3.textContent = 'Results';
+    results.appendChild(h3);
 
     const table = document.createElement('table'); 
     results.appendChild(table);
@@ -161,6 +164,7 @@ function createResultsTable(results, resultsData){
         a = document.createElement('a')
         a.classList.add('driver')
         a.dataset.ref = result.driver.ref
+        a.dataset.season = result.race.year
         a.textContent = result.driver.forename + " " + result.driver.surname;
         td2.appendChild(a);
         tr2.appendChild(td2);
@@ -170,6 +174,7 @@ function createResultsTable(results, resultsData){
         a = document.createElement('a')
         a.classList.add('constructor')
         a.dataset.ref = result.constructor.ref
+        a.dataset.season = result.race.year
         a.textContent = result.constructor.name;;
         td3.appendChild(a);
         tr2.appendChild(td3);

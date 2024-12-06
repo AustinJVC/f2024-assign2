@@ -97,7 +97,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
         }
     });
 
-
     div1.addEventListener('click', (e) => {
         if (e.target.nodeName == 'A') {
             generateRaceView(e.target.dataset.raceId, e.target.dataset.year);
@@ -106,7 +105,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     
     div2.addEventListener('click', (e) => {
         if (e.target.nodeName == 'A') {
-            generatePopup(e.target.className, e.target.dataset.ref);
+            generatePopup(e.target.className, e.target.dataset.ref, e.target.dataset.season);
         }
     });
 
