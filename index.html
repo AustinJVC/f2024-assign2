@@ -1,37 +1,42 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>F1 Statistics</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-        <script src="https://cdn.tailwindcss.com"></script>
-        <script src="scripts/main.js"></script>
-        <script src="scripts/home.js"></script>
-        <script src="scripts/races.js"></script>
-        <script src="scripts/popup.js"></script>
-        <script src="scripts/tailwindScripts.js"></script>
 
-        <style>@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Oxanium:wght@200..800&display=swap');</style>
-        
-    </head>
-    <body style="font-family:'Oxanium'">
-        <header class="h-[10vh] pt-[1.5em] pl-[1em] flex text-white bg-[#e40523]">
-            <h1 class="text-4xl font-bold"><a href=".">F1 Statistics</a></h1>
-        </header>
-        
-        <div class="grid grid-cols-[1fr_1fr] y-overflow-hidden">
-            
-            <div id="selector" class="pl-5 pt-5 h-[90vh] w-[20vw] border-solid">
+<head>
+    <meta charset="utf-8">
+    <title>F1 Statistics</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-            </div>
-            
-            <div id="content" class="w-[80vw] h-[90vh]">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="scripts/main.js"></script>
+    <script src="scripts/home.js"></script>
+    <script src="scripts/races.js"></script>
+    <script src="scripts/popup.js"></script>
+    <script src="scripts/tailwindScripts.js"></script>
 
-            </div>
-        
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Oxanium:wght@200..800&display=swap');
+    </style>
+
+</head>
+
+<body style="font-family:'Oxanium'">
+    <header class="pt-[1em] pb-[1em] pl-[1em] flex text-white bg-[#e40523]">
+        <h1 class="text-4xl font-bold"><a href=".">F1 Statistics</a></h1>
+    </header>
+
+    <div class="grid grid-cols-[1fr_3fr] y-overflow-hidden">
+
+        <div id="selector" class="pl-5 pt-2 h-[90vh] border-solid">
+
         </div>
-    </body>
+
+        <div id="content" class="min-h-[70vh]">
+
+        </div>
+
+    </div>
+</body>
+
 </html>
