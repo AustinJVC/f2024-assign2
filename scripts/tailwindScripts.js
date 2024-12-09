@@ -46,7 +46,7 @@ function generateTableStyling(table){
 }
 
 function generateTDStyling(td){
-    td.classList.add('pl-[8px]')
+    td.classList.add('px-[8px]')
     td.classList.add('pt-[6px]')
     if(td.querySelector('a') != null){
         td.classList.add('cursor-pointer');
