@@ -37,7 +37,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
         
         racesData = JSON.parse(localStorage.getItem("seasonData" + season));
 
-        //console.log(racesData)
 
         const h2 = document.createElement('h2'); 
         h2.textContent = racesData[0].year + " Races";
@@ -89,8 +88,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
     select.addEventListener('change', () => {
         if(localStorage.getItem('seasonData' + select.value) == null || JSON.parse(localStorage.getItem('seasonData' + select.value))[0].year != select.value){
             seasonData = getData("https://www.randyconnolly.com/funwebdev/3rd/api/f1/races.php?season=" + select.value).then((data) => localStorage.setItem("seasonData" + select.value, data)).then(() => updateRaces(select.value));
-            qualifyingData = getData("https://www.randyconnolly.com/funwebdev/3rd/api/f1/qualifying.php?season=" + select.value).then((data) => localStorage.setItem("qualifyingData" + select.value, data));
             resultsData = getData("https://www.randyconnolly.com/funwebdev/3rd/api/f1/results.php?season=" + select.value).then((data) => localStorage.setItem("resultsData" + select.value, data));   
+            qualifyingData = getData("https://www.randyconnolly.com/funwebdev/3rd/api/f1/qualifying.php?season=" + select.value).then((data) => localStorage.setItem("qualifyingData" + select.value, data));
         }
         else{
             updateRaces(select.value)
