@@ -86,10 +86,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
             a.textContent = 'Results';
             a.dataset.raceId = race.id;
             a.dataset.year = race.year;
-            td3.classList.add('pl-4')
-            td3.classList.add('pt-1')
             td3.appendChild(a)
 
+            generateTDStyling(td3);
             tr2.appendChild(td3);
             table.appendChild(tr2);
         }

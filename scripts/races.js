@@ -54,6 +54,7 @@ function createQualifyingTable(qualifying, qualifyingData){
     qualifying.appendChild(h3);
 
     const table = document.createElement('table'); 
+    table.classList.add('w-[95%]')
     qualifying.appendChild(table);
 
 
@@ -146,6 +147,7 @@ function createResultsTable(results, resultsData){
     results.appendChild(h3);
 
     const table = document.createElement('table'); 
+    table.classList.add('w-[95%]')
     results.appendChild(table);
 
     const tr = document.createElement('tr'); 

@@ -189,6 +189,7 @@ function constructorPopup(ref, season){
 
 
         const headerRow = document.createElement('tr');
+        
         const headers = ['Rnd', 'Circuit', 'Driver Name', 'Pos', 'Points'];
         
         for(let header of headers) {
@@ -295,12 +296,14 @@ function generateTableStyling(table){
     table.classList.add('border')
     table.classList.add('border-black')
     table.classList.add('border-w-10')
+    table.classList.add('w-full')
+    table.classList.add('table-auto')
     
 }
 
 function generateTDStyling(td){
-    td.classList.add('pl-[10px]')
-    td.classList.add('pt-[8px]')
+    td.classList.add('pl-[8px]')
+    td.classList.add('pt-[10px]')
     if(td.querySelector('a') != null){
         td.classList.add('cursor-pointer');
         td.classList.add('underline')
@@ -313,5 +316,5 @@ function generateTRStyling(tr){
 
 function generateTHStyling(th){
     th.classList.add('text-left')
-    th.classList.add('pl-[10px]')
+    th.classList.add('pl-[8px]')
 }
