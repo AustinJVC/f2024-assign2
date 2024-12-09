@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', ()=>{
     div1 = document.querySelector('#selector')
     div1.classList.add('bg-white')
-    div1.classList.add('z-10')
     div2 = document.querySelector('#content')
     
     function generateHomeView(div1, div2){

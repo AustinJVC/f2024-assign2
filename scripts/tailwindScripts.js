@@ -5,7 +5,7 @@ function generateModalStyling(modal, overlay, modalContent, closeButton, results
     modal.classList.add('-translate-x-1/2');
     modal.classList.add('-translate-y-1/2');
     modal.classList.add('bg-white');
-    modal.classList.add('p-10');
+    modal.classList.add('p-5');
     modal.classList.add('rounded-md');
     modal.classList.add('z-10');
     modal.classList.add('w-[50vw]');
@@ -30,7 +30,7 @@ function generateModalStyling(modal, overlay, modalContent, closeButton, results
 
     resultsTitle.classList.add("text-2xl")
 
-    resultsSection.classList.add('max-h-96');
+    resultsSection.classList.add('max-h-[25em]');
     resultsSection.classList.add('overflow-y-auto');
 
     h2.classList.add("text-2xl")
