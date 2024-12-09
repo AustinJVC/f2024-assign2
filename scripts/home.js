@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     function generateHomeView(div1, div2){
         select = document.createElement('select');
 
-        select.classList.add('text-4xl')
+        select.classList.add('text-2xl')
 
         option = document.createElement('option')
         option.disabled = true;

@@ -30,7 +30,7 @@ function generateModalStyling(modal, overlay, modalContent, closeButton, results
 
     resultsTitle.classList.add("text-2xl")
 
-    resultsSection.classList.add('max-h-[25em]');
+    resultsSection.classList.add('h-[40%]');
     resultsSection.classList.add('overflow-y-auto');
 
     h2.classList.add("text-2xl")
@@ -41,7 +41,6 @@ function generateTableStyling(table){
     table.classList.add('border')
     table.classList.add('border-black')
     table.classList.add('border-w-10')
-    table.classList.add('w-full')
     table.classList.add('table-auto')
     
 }
