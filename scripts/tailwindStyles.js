@@ -19,7 +19,7 @@ function generateModalStyling(modal, overlay, modalContent, closeButton, results
 
     modalContent.classList.add('modal-content');
     modalContent.classList.add('grid');
-    modalContent.classList.add('grid-cols-[1fr_1fr]');
+    modalContent.classList.add('grid-cols-[1fr_3fr]');
     closeButton.classList.add('absolute');
     closeButton.classList.add('top-3');
     closeButton.classList.add('right-3');
@@ -35,7 +35,7 @@ function generateTableStyling(table) {
     table.classList.add('border')
     table.classList.add('border-black')
     table.classList.add('border-w-10')
-    table.classList.add('table-auto')
+    table.classList.add('w-full', 'table-auto')
 
 }
 function generateTDStyling(td) {

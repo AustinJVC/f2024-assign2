@@ -1,6 +1,5 @@
 function generateRaceView(raceId, season) {
 
-
     div2 = document.querySelector('#content')
     div2.classList.add("grid")
     div2.classList.add("grid-cols-[1fr_1fr]")
@@ -14,7 +13,8 @@ function generateRaceView(raceId, season) {
 
     qualifyingData = JSON.parse(localStorage.getItem("qualifyingData" + season));
     resultsData = JSON.parse(localStorage.getItem("resultsData" + season));
-
+    seasonData = JSON.parse(localStorage.getItem("seasonData" + season));
+    
     tempArray = [];
     for (result of qualifyingData) {
         if (result.race.id == raceId) {
@@ -33,6 +33,17 @@ function generateRaceView(raceId, season) {
 
     resultsData = tempArray;
 
+    tempArray = [];
+    for (race of seasonData) {
+        if (race.id == raceId) {
+            tempArray = race;
+        }
+    }
+
+    seasonData = tempArray;
+
+    console.log(seasonData);
+
     qualifying = document.createElement('div');
     qualifying.classList.add = 'qualifying';
     div2.appendChild(qualifying);
@@ -44,7 +55,7 @@ function generateRaceView(raceId, season) {
     createQualifyingTable(qualifying, qualifyingData);
     createResultsTable(results, resultsData);
     header = document.querySelector("h1 a");
-    header.textContent = "F1 Statistics - " + qualifyingData[0].race.year + " " + qualifyingData[0].race.name
+    header.textContent = qualifyingData[0].race.year + " " + qualifyingData[0].race.name + " - " + seasonData.circuit.name + ": " + seasonData.circuit.location + ", " + seasonData.circuit.country 
 
 }
 function createQualifyingTable(qualifying, qualifyingData) {
@@ -106,7 +117,13 @@ function createQualifyingTable(qualifying, qualifyingData) {
         a.classList.add('driver')
         a.dataset.ref = result.driver.ref
         a.dataset.season = result.race.year
-        a.textContent = result.driver.forename + " " + result.driver.surname;
+        a.dataset.raceId = result.race.id
+        if(localStorage.getItem('favourites') != null && JSON.parse(localStorage.getItem('favourites')).indexOf(result.driver.ref) > -1){
+            a.textContent = result.driver.forename + " " + result.driver.surname + " \u2665";
+        }
+        else{
+            a.textContent = result.driver.forename + " " + result.driver.surname;
+        }
         td2.appendChild(a);
         generateTDStyling(td2);
         tr2.appendChild(td2);
@@ -116,7 +133,13 @@ function createQualifyingTable(qualifying, qualifyingData) {
         a.classList.add('constructor')
         a.dataset.ref = result.constructor.ref
         a.dataset.season = result.race.year
-        a.textContent = result.constructor.name;;
+        a.dataset.raceId = result.race.id
+        if(localStorage.getItem('favourites') != null && JSON.parse(localStorage.getItem('favourites')).indexOf(result.constructor.ref) > -1){    
+            a.textContent = result.constructor.name + " \u2665";
+        }
+        else{
+            a.textContent = result.constructor.name;
+        }
         td3.appendChild(a);
         generateTDStyling(td3);
         tr2.appendChild(td3);
@@ -198,7 +221,13 @@ function createResultsTable(results, resultsData) {
         a.classList.add('driver')
         a.dataset.ref = result.driver.ref
         a.dataset.season = result.race.year
-        a.textContent = result.driver.forename + " " + result.driver.surname;
+        a.dataset.raceId = result.race.id
+        if(localStorage.getItem('favourites') != null && JSON.parse(localStorage.getItem('favourites')).indexOf(result.driver.ref) > -1){
+            a.textContent = result.driver.forename + " " + result.driver.surname + " \u2665";
+        }
+        else{
+            a.textContent = result.driver.forename + " " + result.driver.surname;
+        }
         td2.appendChild(a);
         generateTDStyling(td2)
         tr2.appendChild(td2);
@@ -209,7 +238,13 @@ function createResultsTable(results, resultsData) {
         a.classList.add('constructor')
         a.dataset.ref = result.constructor.ref
         a.dataset.season = result.race.year
-        a.textContent = result.constructor.name;;
+        a.dataset.raceId = result.race.id
+        if(localStorage.getItem('favourites') != null && JSON.parse(localStorage.getItem('favourites')).indexOf(result.constructor.ref) > -1){    
+            a.textContent = result.constructor.name + " \u2665";
+        }
+        else{
+            a.textContent = result.constructor.name;
+        }
         td3.appendChild(a);
         generateTDStyling(td3)
         tr2.appendChild(td3);
@@ -226,6 +261,11 @@ function createResultsTable(results, resultsData) {
 
         generateTRStyling(tr2)
         table.appendChild(tr2);
+
+        if(result.position <4 ){
+            tr2.classList.add('font-bold', 'text-red-800')
+        }
+
     }
     const resultsTable = document.querySelector('#resultsTable');
     headerEvents(resultsTable);
@@ -233,8 +273,11 @@ function createResultsTable(results, resultsData) {
 
 function headerEvents(table) {
     const headers = table.querySelectorAll('th');
+    
     headers.forEach((th, colIndex) => {
         th.addEventListener('click', () => {
+            headers.forEach( (head) => head.classList.remove('underline', 'font-extrabold'))
+            th.classList.add('underline', 'font-extrabold')
             const rows = Array.from(table.querySelectorAll('tr')).slice(1);
             rows.sort((rowA, rowB) => {
                 const cellA = rowA.cells[colIndex].textContent;
