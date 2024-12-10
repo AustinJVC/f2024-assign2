@@ -55,6 +55,7 @@ function createQualifyingTable(qualifying, qualifyingData) {
     qualifying.appendChild(h3);
 
     const table = document.createElement('table');
+    table.id = 'qualifyingTable';
     qualifying.appendChild(table);
 
 
@@ -138,6 +139,8 @@ function createQualifyingTable(qualifying, qualifyingData) {
         generateTRStyling(tr2)
         table.appendChild(tr2);
     }
+    const qualifyingTable = document.querySelector('#qualifyingTable');
+    headerEvents(qualifyingTable);
 }
 function createResultsTable(results, resultsData) {
 
@@ -147,6 +150,7 @@ function createResultsTable(results, resultsData) {
     results.appendChild(h3);
 
     const table = document.createElement('table');
+    table.id = 'resultsTable'
     results.appendChild(table);
 
     const tr = document.createElement('tr');
@@ -176,6 +180,7 @@ function createResultsTable(results, resultsData) {
     th5.textContent = "Pts";
     generateTHStyling(th5)
     tr.appendChild(th5);
+
 
 
     for (let result of resultsData) {
@@ -222,4 +227,33 @@ function createResultsTable(results, resultsData) {
         generateTRStyling(tr2)
         table.appendChild(tr2);
     }
+    const resultsTable = document.querySelector('#resultsTable');
+    headerEvents(resultsTable);
 }
+
+function headerEvents(table) {
+    const headers = table.querySelectorAll('th');
+    headers.forEach((th, colIndex) => {
+        th.addEventListener('click', () => {
+            const rows = Array.from(table.querySelectorAll('tr')).slice(1);
+            rows.sort((rowA, rowB) => {
+                const cellA = rowA.cells[colIndex].textContent;
+                const cellB = rowB.cells[colIndex].textContent;
+
+                if (th.textContent === 'Pts') {
+                    return parseFloat(cellB) - parseFloat(cellA);
+                }
+
+                if (!isNaN(cellA) && !isNaN(cellB)) {
+                    return parseFloat(cellA) - parseFloat(cellB);
+                } else {
+                    return cellA.localeCompare(cellB);
+                }
+            });
+
+            rows.forEach((row) => table.appendChild(row));
+        });
+    });
+}
+
+
