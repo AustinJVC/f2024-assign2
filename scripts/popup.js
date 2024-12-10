@@ -67,14 +67,18 @@ function driverPopup(ref, season) {
 
             let favouriteButton = document.createElement('a');
             favouriteButton.dataset.ref = ref;
-            let icon = document.createElement('i')
-
-            icon.classList.add('fa-regular', 'fa-heart')
-
+            favouriteButton.classList.add('fa-regular', 'fa-heart')
             favouriteButton.classList.add('inline-block');
-            favouriteButton.classList.add('p-5');
+            favouriteButton.classList.add('mt-5');
+            favouriteButton.classList.add('p-2');
+            favouriteButton.classList.add('border-solid', 'border-black', 'border-2', 'rounded-md');
 
-            favouriteButton.appendChild(icon);
+            let p = document.createElement('p')
+            p.textContent = 'Favourite'
+            p.classList.add('inline', 'pl-3')
+            favouriteButton.appendChild(p);
+
+
             driverInfo.appendChild(favouriteButton);
 
 
@@ -133,6 +137,7 @@ function driverPopup(ref, season) {
                 overlay.style.display = 'none';
             })
 
+            generateFavouriteEventHandler(favouriteButton);
             generateModalStyling(modal, overlay, modalContent, closeButton, resultsTitle, resultsSection, h2)
 
             modal.style.display = 'block';
@@ -167,20 +172,6 @@ function constructorPopup(ref, season) {
             h2.textContent = 'Constructor Details:'
             constInfo.appendChild(h2);
 
-
-            let favouriteButton = document.createElement('a');
-            favouriteButton.dataset.ref = ref;
-            let icon = document.createElement('i')
-
-            icon.classList.add('fa-regular', 'fa-heart')
-
-            favouriteButton.classList.add('inline-block');
-            favouriteButton.classList.add('p-5');
-
-            favouriteButton.appendChild(icon);
-            constInfo.appendChild(favouriteButton);
-
-
             const imgDiv = document.createElement('div');
             constInfo.appendChild(imgDiv);
 
@@ -198,7 +189,7 @@ function constructorPopup(ref, season) {
             let li4 = document.createElement('li');
             li4.textContent = stats['url'];
             details.appendChild(li4);
-
+            
             constInfo.appendChild(details);
             modalContent.appendChild(constInfo);
 
@@ -207,6 +198,22 @@ function constructorPopup(ref, season) {
             let resultsTitle = document.createElement('h2');
             resultsTitle.textContent = "Constructor Results";
             resultsSection.appendChild(resultsTitle);
+
+            let favouriteButton = document.createElement('a');
+            favouriteButton.dataset.ref = ref;
+            favouriteButton.classList.add('fa-regular', 'fa-heart')
+
+            favouriteButton.classList.add('inline-block');
+            favouriteButton.classList.add('mt-5');
+            favouriteButton.classList.add('p-2');
+            favouriteButton.classList.add('border-solid', 'border-black', 'border-2', 'rounded-md');
+
+            let p = document.createElement('p')
+            p.textContent = 'Favourite'
+            p.classList.add('inline', 'pl-3')
+            favouriteButton.appendChild(p);
+
+            constInfo.appendChild(favouriteButton);
 
             const resultsTable = document.createElement('table');
             generateTableStyling(resultsTable)
@@ -271,13 +278,7 @@ function constructorPopup(ref, season) {
                 overlay.style.display = 'none';
             })
 
-            favouriteButton.addEventListener('click', (event) => {
-                if (localStorage.getItem('favourites') == null) {
-                    favourites = [];
-                    favourites.push(event.target.dataset.ref)
-                    localStorage.setItem('favourites', JSON.stringify(favourites))
-                }
-            })
+            generateFavouriteEventHandler(favouriteButton);
 
             generateModalStyling(modal, overlay, modalContent, closeButton, resultsTitle, resultsSection, h2)
 
@@ -285,5 +286,31 @@ function constructorPopup(ref, season) {
             overlay.classList.display = 'block';
         });
 };
+
+function generateFavouriteEventHandler(favouriteButton){
+    favouriteButton.addEventListener('click', () => {
+
+        let favourites = JSON.parse(localStorage.getItem('favourites'));
+
+        if (favourites == null ) {
+            favourites = [];
+            favourites.push(favouriteButton.dataset.ref)
+            favouriteButton.classList.remove('fa-regular');
+            favouriteButton.classList.add('fa-solid');
+        }
+        else if(favourites.indexOf(favouriteButton.dataset.ref) > -1){
+            tempfavorites = favourites.filter(favorite => favorite != favouriteButton.dataset.ref);
+            favourites=tempfavorites;
+            favouriteButton.classList.remove('fa-solid');
+            favouriteButton.classList.add('fa-regular');
+        }    
+            else{
+            favourites.push(favouriteButton.dataset.ref)
+            favouriteButton.classList.remove('fa-regular');
+            favouriteButton.classList.add('fa-solid');
+        }
+        localStorage.setItem('favourites', JSON.stringify(favourites))
+    })
+}
 
 
