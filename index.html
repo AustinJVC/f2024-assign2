@@ -19,30 +19,37 @@
     -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    
+    <!--Responsible for retrieving data from the API.-->
     <script src="scripts/main.js"></script>
+    
+    <!--Responsible for displaying the select list, and calls functions to display the corresponding races. Furthermore, it does some event handling.-->
     <script src="scripts/home.js"></script>
+
+    <!--Responsible for displaying the qualifying and results tables. Addiitonally, it handles events for the modals.-->
     <script src="scripts/races.js"></script>
+
+    <!--Responsible for creating the modals of drivers, contructors, and circuits.-->
     <script src="scripts/popup.js"></script>
+
+    <!--Contains the repetitive tailwind styling that we have applied to many different elements.-->
     <script src="scripts/tailwindStyles.js"></script>
 
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Oxanium:wght@200..800&display=swap');
-    </style>
-
+    <!--Inports the main font used site-wide.-->
+    <style>@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Oxanium:wght@200..800&display=swap');</style>
 </head>
 
 <body style="font-family:'Oxanium'">
+
     <header class="pt-[1em] pb-[1em] pl-[1em] flex text-white bg-[#e40523]">
         <h1 class="text-4xl font-bold"><a href=".">F1 Statistics</a></h1>
     </header>
 
     <div class="grid grid-cols-[1fr_3fr] y-overflow-hidden">
-
+        <!--The side bar where users select their season and race.-->
         <div id="selector" class="pl-5 pt-2 h-[90vh] border-solid">
 
         </div>
-
+        <!--The main content area where results are displayed.-->
         <div id="content" class="min-h-[70vh]">
 
         </div>

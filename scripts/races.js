@@ -1,5 +1,5 @@
 function generateRaceView(raceId, season) {
-
+    // Set up the basic layout and structure for the race view.
     div2 = document.querySelector('#content')
     div2.classList.add("grid")
     div2.classList.add("grid-cols-[1fr_1fr]")
@@ -11,17 +11,18 @@ function generateRaceView(raceId, season) {
         child.remove();
     }
 
+    // Retrieve qualifying, results, and season data from local storage.
     qualifyingData = JSON.parse(localStorage.getItem("qualifyingData" + season));
     resultsData = JSON.parse(localStorage.getItem("resultsData" + season));
     seasonData = JSON.parse(localStorage.getItem("seasonData" + season));
     
+    // Filter data to only include information relevant to the selected race.
     tempArray = [];
     for (result of qualifyingData) {
         if (result.race.id == raceId) {
             tempArray.push(result)
         }
     }
-
     qualifyingData = tempArray;
 
     tempArray = [];
@@ -30,7 +31,6 @@ function generateRaceView(raceId, season) {
             tempArray.push(result)
         }
     }
-
     resultsData = tempArray;
 
     tempArray = [];
@@ -39,11 +39,9 @@ function generateRaceView(raceId, season) {
             tempArray = race;
         }
     }
-
     seasonData = tempArray;
 
-    console.log(seasonData);
-
+    // Create divs to hold the qualifying and results tables.
     qualifying = document.createElement('div');
     qualifying.classList.add = 'qualifying';
     div2.appendChild(qualifying);
@@ -52,14 +50,18 @@ function generateRaceView(raceId, season) {
     results.classList.add = 'results';
     div2.appendChild(results);
 
-    createQualifyingTable(qualifying, qualifyingData);
-    createResultsTable(results, resultsData);
+    // Generate the qualifying and results tables.
+    createQualifyingTable(qualifying, qualifyingData); 
+    createResultsTable(results, resultsData); 
+    
+    // Update the header to display information about the selected race.
     header = document.querySelector("h1 a");
     header.textContent = qualifyingData[0].race.year + " " + qualifyingData[0].race.name + " - " + seasonData.circuit.name + ": " + seasonData.circuit.location + ", " + seasonData.circuit.country 
 
 }
-function createQualifyingTable(qualifying, qualifyingData) {
 
+function createQualifyingTable(qualifying, qualifyingData) {
+    // Create the qualifying table and populate it with data.
     const h3 = document.createElement('h3');
     h3.textContent = 'Qualifying';
     h3.classList.add("text-2xl")
@@ -69,10 +71,10 @@ function createQualifyingTable(qualifying, qualifyingData) {
     table.id = 'qualifyingTable';
     qualifying.appendChild(table);
 
-
     const tr = document.createElement('tr');
     table.appendChild(tr);
 
+    // Create table header cells.
     const th1 = document.createElement('th');
     th1.textContent = "Pos";
     generateTHStyling(th1);
@@ -103,6 +105,7 @@ function createQualifyingTable(qualifying, qualifyingData) {
     generateTHStyling(th6);
     tr.appendChild(th6);
 
+    // Populate the table with qualifying results.
     for (let result of qualifyingData) {
         const tr2 = document.createElement('tr');
 
@@ -118,6 +121,8 @@ function createQualifyingTable(qualifying, qualifyingData) {
         a.dataset.ref = result.driver.ref
         a.dataset.season = result.race.year
         a.dataset.raceId = result.race.id
+
+        // Add a heart symbol next to favorited drivers.
         if(localStorage.getItem('favourites') != null && JSON.parse(localStorage.getItem('favourites')).indexOf(result.driver.ref) > -1){
             a.textContent = result.driver.forename + " " + result.driver.surname + " \u2665";
         }
@@ -134,7 +139,8 @@ function createQualifyingTable(qualifying, qualifyingData) {
         a.dataset.ref = result.constructor.ref
         a.dataset.season = result.race.year
         a.dataset.raceId = result.race.id
-        if(localStorage.getItem('favourites') != null && JSON.parse(localStorage.getItem('favourites')).indexOf(result.constructor.ref) > -1){    
+        // Add a heart symbol next to favorited constructors.
+        if(localStorage.getItem('favourites') != null && JSON.parse(localStorage.getItem('favourites')).indexOf(result.constructor.ref) > -1){       
             a.textContent = result.constructor.name + " \u2665";
         }
         else{
@@ -162,11 +168,13 @@ function createQualifyingTable(qualifying, qualifyingData) {
         generateTRStyling(tr2)
         table.appendChild(tr2);
     }
-    const qualifyingTable = document.querySelector('#qualifyingTable');
-    headerEvents(qualifyingTable);
-}
-function createResultsTable(results, resultsData) {
 
+    const qualifyingTable = document.querySelector('#qualifyingTable');
+    headerEvents(qualifyingTable); 
+}
+
+function createResultsTable(results, resultsData) {
+    // Create the results table and populate it with data.
     const h3 = document.createElement('h3');
     h3.textContent = 'Results';
     h3.classList.add("text-2xl")
@@ -179,6 +187,7 @@ function createResultsTable(results, resultsData) {
     const tr = document.createElement('tr');
     table.appendChild(tr);
 
+    // Create table header cells.
     const th1 = document.createElement('th');
     th1.textContent = "Pos";
     generateTHStyling(th1)
@@ -204,8 +213,7 @@ function createResultsTable(results, resultsData) {
     generateTHStyling(th5)
     tr.appendChild(th5);
 
-
-
+    // Populate the table with race results.
     for (let result of resultsData) {
         const tr2 = document.createElement('tr');
         generateTRStyling(tr2)
@@ -222,6 +230,8 @@ function createResultsTable(results, resultsData) {
         a.dataset.ref = result.driver.ref
         a.dataset.season = result.race.year
         a.dataset.raceId = result.race.id
+
+        // Add a heart symbol next to favorited drivers.
         if(localStorage.getItem('favourites') != null && JSON.parse(localStorage.getItem('favourites')).indexOf(result.driver.ref) > -1){
             a.textContent = result.driver.forename + " " + result.driver.surname + " \u2665";
         }
@@ -239,7 +249,8 @@ function createResultsTable(results, resultsData) {
         a.dataset.ref = result.constructor.ref
         a.dataset.season = result.race.year
         a.dataset.raceId = result.race.id
-        if(localStorage.getItem('favourites') != null && JSON.parse(localStorage.getItem('favourites')).indexOf(result.constructor.ref) > -1){    
+        // Add a heart symbol next to favorited constructors.
+        if(localStorage.getItem('favourites') != null && JSON.parse(localStorage.getItem('favourites')).indexOf(result.constructor.ref) > -1){       
             a.textContent = result.constructor.name + " \u2665";
         }
         else{
@@ -262,41 +273,49 @@ function createResultsTable(results, resultsData) {
         generateTRStyling(tr2)
         table.appendChild(tr2);
 
-        if(result.position <4 ){
+        // Highlight top 3 positions.
+        if(result.position < 4 ){ 
             tr2.classList.add('font-bold', 'text-red-800')
         }
-
     }
-    const resultsTable = document.querySelector('#resultsTable');
-    headerEvents(resultsTable);
-}
 
+    const resultsTable = document.querySelector('#resultsTable');
+    headerEvents(resultsTable); 
+}
 function headerEvents(table) {
+    // Make table headers clickable to allow for sorting the columns.
     const headers = table.querySelectorAll('th');
     
     headers.forEach((th, colIndex) => {
         th.addEventListener('click', () => {
+            // Add visual indication of the sorted column.
             headers.forEach( (head) => head.classList.remove('underline', 'font-extrabold'))
             th.classList.add('underline', 'font-extrabold')
-            const rows = Array.from(table.querySelectorAll('tr')).slice(1);
-            rows.sort((rowA, rowB) => {
+
+            // Get all rows except the header row.
+            const rows = Array.from(table.querySelectorAll('tr')).slice(1); 
+            
+            // Sort the rows based on the clicked column.
+            rows.sort((rowA, rowB) => { 
                 const cellA = rowA.cells[colIndex].textContent;
                 const cellB = rowB.cells[colIndex].textContent;
 
+                // Special handling for the 'Pts' column (sorting numbers).
                 if (th.textContent === 'Pts') {
-                    return parseFloat(cellB) - parseFloat(cellA);
+                    return parseFloat(cellB) - parseFloat(cellA); 
                 }
 
+                // Sort numerically if both cells contain numbers, otherwise sort alphabetically.
                 if (!isNaN(cellA) && !isNaN(cellB)) {
-                    return parseFloat(cellA) - parseFloat(cellB);
+                    return parseFloat(cellA) - parseFloat(cellB); 
                 } else {
-                    return cellA.localeCompare(cellB);
+                    return cellA.localeCompare(cellB); 
                 }
             });
 
-            rows.forEach((row) => table.appendChild(row));
+            // Re-append the sorted rows to the table.
+            rows.forEach((row) => table.appendChild(row)); 
         });
     });
 }
-
 

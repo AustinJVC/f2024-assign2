@@ -1,4 +1,5 @@
 function generatePopup(type, ref, season, raceId) {
+    // Determine which type of popup to create based on the provided 'type' argument.
     if (type == 'driver') {
         driverPopup(ref, season, raceId);
     }
@@ -11,26 +12,28 @@ function generatePopup(type, ref, season, raceId) {
 }
 
 function driverPopup(ref, season, raceId) {
+    // Fetch driver data from API and then create a popup with driver details and race results.
     driverStats = getData('https://www.randyconnolly.com/funwebdev/3rd/api/f1/drivers.php?ref=' + ref)
         .then((driverStats) => {
 
             stats = JSON.parse(driverStats);
-            const modal = document.createElement('section');
 
+            // Create modal (popup) elements: modal container, overlay, content div. 
+            const modal = document.createElement('section');
             document.body.appendChild(modal);
 
             const overlay = document.createElement('div');
-
             document.body.appendChild(overlay);
 
             const modalContent = document.createElement('div');
             modal.appendChild(modalContent);
 
+            // Create close button for the modal.
             const closeButton = document.createElement('button');
-
             closeButton.textContent = 'X';
             modalContent.appendChild(closeButton);
 
+            // Create elements to display driver information (name, image, etc.).
             const driverInfo = document.createElement('div');
             h2 = document.createElement('h2');
             h2.textContent = 'Details:'
@@ -72,6 +75,7 @@ function driverPopup(ref, season, raceId) {
             driverInfo.appendChild(details);
             modalContent.appendChild(driverInfo);
 
+            // Create section to display race results.
             const resultsTile = document.createElement('div');
 
             let resultsTitle = document.createElement('h2');
@@ -79,6 +83,8 @@ function driverPopup(ref, season, raceId) {
             resultsTile.appendChild(resultsTitle);
 
             const resultsSection = document.createElement('div');
+
+            // Add a favorite button to allow users to save drivers.
             let favouriteButton = document.createElement('a');
             favouriteButton.dataset.ref = ref;
             favouriteButton.dataset.raceId = raceId;
@@ -101,13 +107,14 @@ function driverPopup(ref, season, raceId) {
 
             driverInfo.appendChild(favouriteButton);
 
-
+            // Create table to hold race results data.
             const resultsTable = document.createElement('table');
             generateTableStyling(resultsTable)
 
             const headerRow = document.createElement('tr');
             const headers = ['Rnd', 'Name', 'Pos', 'Points'];
 
+            // Create table header cells.
             for (let header of headers) {
                 let th = document.createElement('th');
                 th.textContent = header;
@@ -117,9 +124,10 @@ function driverPopup(ref, season, raceId) {
 
             resultsTable.appendChild(headerRow);
 
-
+            // Retrieve race results data from local storage.
             resultsData = JSON.parse(localStorage.getItem('resultsData' + season));
 
+            // Populate the table with race results.
             for (let result of resultsData) {
                 if (result.driver.ref == ref && result.race.year == season) {
                     const row = document.createElement('tr');
@@ -153,12 +161,15 @@ function driverPopup(ref, season, raceId) {
             resultsTile.appendChild(resultsSection)
             modalContent.appendChild(resultsTile);
 
+            // Add event listener to close the modal when the close button is clicked.
             closeButton.addEventListener('click', () => {
                 modal.style.display = 'none';
                 overlay.style.display = 'none';
             })
 
             generateFavouriteEventHandler(favouriteButton, season);
+
+            // Apply styling to the modal elements.
             generateModalStyling(modal, overlay, modalContent, closeButton, resultsTitle, resultsSection, h2)
 
             modal.style.display = 'block';
@@ -167,26 +178,28 @@ function driverPopup(ref, season, raceId) {
 };
 
 function circuitPopup(ref, season, raceId) {
+    // Fetch circuit data from the API and create a popup displaying circuit information.
     circuitStats = getData('https://www.randyconnolly.com/funwebdev/3rd/api/f1/circuits.php?id=' + ref)
         .then((circuitStats) => {
 
             stats = JSON.parse(circuitStats);
-            const modal = document.createElement('section');
 
+            // Create modal (popup) elements: modal container, overlay, content div.
+            const modal = document.createElement('section');
             document.body.appendChild(modal);
 
             const overlay = document.createElement('div');
-
             document.body.appendChild(overlay);
 
             const modalContent = document.createElement('div');
             modal.appendChild(modalContent);
 
+            // Create close button for the modal.
             const closeButton = document.createElement('button');
-
             closeButton.textContent = 'X';
             modalContent.appendChild(closeButton);
 
+            // Create elements to display circuit information (name, location, etc.).
             const circuitInfo = document.createElement('div');
             h2 = document.createElement('h2');
             h2.textContent = 'Details:'
@@ -219,11 +232,13 @@ function circuitPopup(ref, season, raceId) {
             circuitInfo.appendChild(details);
             modalContent.appendChild(circuitInfo);
 
+            // Add event listener to close the modal when the close button is clicked.
             closeButton.addEventListener('click', () => {
                 modal.style.display = 'none';
                 overlay.style.display = 'none';
             })
 
+            // Create a section for additional information (could be results or other details).
             const resultsSection = document.createElement('div');
 
             let resultsTitle = document.createElement('h2');
@@ -239,6 +254,7 @@ function circuitPopup(ref, season, raceId) {
 
             modalContent.appendChild(resultsSection)
 
+            // Apply styling to the modal elements.
             generateModalStyling(modal, overlay, modalContent, closeButton, resultsTitle, resultsSection, h2)
 
             modal.style.display = 'block';
@@ -247,26 +263,28 @@ function circuitPopup(ref, season, raceId) {
 };
 
 function constructorPopup(ref, season, raceId) {
+    // Fetch constructor data from the API and then create a popup to display this information.
     let constructorStats = getData('https://www.randyconnolly.com/funwebdev/3rd/api/f1/constructors.php?ref=' + ref)
         .then((constructorStats) => {
 
             stats = JSON.parse(constructorStats);
-            const modal = document.createElement('section');
 
+            // Create modal (popup) elements: modal container, overlay, content div.
+            const modal = document.createElement('section');
             document.body.appendChild(modal);
 
             const overlay = document.createElement('div');
-
             document.body.appendChild(overlay);
 
             const modalContent = document.createElement('div');
             modal.appendChild(modalContent);
 
+            // Create close button for the modal.
             const closeButton = document.createElement('button');
-
             closeButton.textContent = 'X';
             modalContent.appendChild(closeButton);
 
+            // Create elements to display constructor information (name, nationality, etc.).
             const constInfo = document.createElement('div');
             h2 = document.createElement('h2');
             h2.textContent = 'Details:'
@@ -296,13 +314,16 @@ function constructorPopup(ref, season, raceId) {
             constInfo.appendChild(details);
             modalContent.appendChild(constInfo);
 
+            // Create a section to display race results for the constructor.
             const resultsTile = document.createElement('div');
 
             let resultsTitle = document.createElement('h2');
             resultsTitle.textContent = "Race Results:";
             resultsTile.appendChild(resultsTitle);
+
             const resultsSection = document.createElement('div');
 
+            // Add a favorite button to allow users to save constructors.
             let favouriteButton = document.createElement('a');
             favouriteButton.dataset.ref = ref;
             favouriteButton.dataset.raceId = raceId;
@@ -324,15 +345,15 @@ function constructorPopup(ref, season, raceId) {
 
             constInfo.appendChild(favouriteButton);
 
+            // Create a table to hold and display the race results data.
             const resultsTable = document.createElement('table');
             generateTableStyling(resultsTable)
-
-
 
             const headerRow = document.createElement('tr');
 
             const headers = ['Rnd', 'Name', 'Driver', 'Pos', 'Points'];
 
+            // Create table header cells.
             for (let header of headers) {
                 let th = document.createElement('th');
                 th.textContent = header;
@@ -342,9 +363,10 @@ function constructorPopup(ref, season, raceId) {
 
             resultsTable.appendChild(headerRow);
 
-
+            // Retrieve race results data from local storage.
             resultsData = JSON.parse(localStorage.getItem('resultsData' + season));
 
+            // Populate the results table.
             for (let result of resultsData) {
                 if (result.constructor.ref == ref && result.race.year == season) {
                     const row = document.createElement('tr');
@@ -383,6 +405,7 @@ function constructorPopup(ref, season, raceId) {
             resultsTile.appendChild(resultsSection);
             modalContent.appendChild(resultsTile);
 
+            // Add event listener to close the modal when the close button is clicked.
             closeButton.addEventListener('click', () => {
                 modal.style.display = 'none';
                 overlay.style.display = 'none';
@@ -390,6 +413,7 @@ function constructorPopup(ref, season, raceId) {
 
             generateFavouriteEventHandler(favouriteButton, season);
 
+            // Apply styling to the modal elements.
             generateModalStyling(modal, overlay, modalContent, closeButton, resultsTitle, resultsSection, h2)
 
             modal.style.display = 'block';
@@ -398,24 +422,28 @@ function constructorPopup(ref, season, raceId) {
 };
 
 function generateFavouriteEventHandler(favouriteButton, season){
+    // Add an event listener to the favorite button to handle adding/removing favorites.
     favouriteButton.addEventListener('click', () => {
 
         let favourites = JSON.parse(localStorage.getItem('favourites'));
 
-        if (favourites == null ) {
+        // If no favorites exist yet, create a new list and add the current item.
+        if (favourites == null ) { 
             favourites = [];
             favourites.push(favouriteButton.dataset.ref)
             favouriteButton.classList.remove('fa-regular');
             favouriteButton.classList.add('fa-solid');
         }
-        else if(favourites.indexOf(favouriteButton.dataset.ref) > -1){
+        // If the item is already in favorites, remove it.
+        else if(favourites.indexOf(favouriteButton.dataset.ref) > -1){ 
             tempfavorites = favourites.filter(favorite => favorite != favouriteButton.dataset.ref);
             favourites=tempfavorites;
             favouriteButton.classList.remove('fa-solid');
             favouriteButton.classList.add('fa-regular');
 
-        }    
-            else{
+        }   
+        // Otherwise, add the current item to the favorites list.  
+        else{
             favourites.push(favouriteButton.dataset.ref)
             favouriteButton.classList.remove('fa-regular');
             favouriteButton.classList.add('fa-solid');
@@ -424,5 +452,3 @@ function generateFavouriteEventHandler(favouriteButton, season){
         generateRaceView(favouriteButton.dataset.raceId, season);
     })
 }
-
-

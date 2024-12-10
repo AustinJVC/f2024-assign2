@@ -1,4 +1,5 @@
 function generateModalStyling(modal, overlay, modalContent, closeButton, resultsTitle, resultsSection, h2) {
+    // Apply CSS classes to style the modal (popup) window, including its position, background, size, etc.
     modal.classList.add('fixed');
     modal.classList.add('top-1/2');
     modal.classList.add('left-1/2');
@@ -31,14 +32,18 @@ function generateModalStyling(modal, overlay, modalContent, closeButton, results
     h2.classList.add("text-2xl")
 
 }
+
 function generateTableStyling(table) {
+    // Apply CSS classes to style the table elements (borders, width).
     table.classList.add('border')
     table.classList.add('border-black')
     table.classList.add('border-w-10')
     table.classList.add('w-full', 'table-auto')
 
 }
+
 function generateTDStyling(td) {
+    // Apply CSS classes to style the table cells (padding, cursor, underline).
     td.classList.add('pl-[8px]')
     td.classList.add('pt-1')
     if (td.querySelector('a') != null) {
@@ -46,10 +51,14 @@ function generateTDStyling(td) {
         td.classList.add('underline')
     }
 }
+
 function generateTRStyling(tr) {
+    // Apply CSS classes to style the table rows (background color).
     tr.classList.add('even:bg-red-100')
 }
+
 function generateTHStyling(th) {
+    // Apply CSS classes to style the table header cells (text alignment, padding).
     th.classList.add('text-left')
     th.classList.add('pl-[8px]')
     th.classList.add('pr-[12px]')
